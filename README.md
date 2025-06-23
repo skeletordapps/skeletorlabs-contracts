@@ -1,67 +1,37 @@
-## Foundry
+# 📦 Smart Contracts Portfolio
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+Welcome to the public Skeletor Dapps Portfolio smart contracts repo -- built with [Foundry](https://github.com/foundry-rs/foundry) — a blazing-fast, modular toolkit for Ethereum development. This repo contains auditable, tested, and gas-efficient contracts written in Solidity.
 
-Foundry consists of:
+## ✨ Contracts
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+### ✅ TestimonialRegistry
 
-## Documentation
+A simple and gas-efficient registry for storing testimonials off-chain (on IPFS) while keeping verifiable references on-chain. It includes:
 
-https://book.getfoundry.sh/
+- IPFS CID storage and mapping
+- Author/Owner removal
+- Like functionality (one like per address/testimonial)
+- Public event logging for off-chain indexing
 
-## Usage
+Planned features:
+- More contracts coming soon...
 
-### Build
+## 🛠 Stack
 
-```shell
-$ forge build
-```
+- **Solidity**: Smart contract language
+- **Foundry**: Rust-based Ethereum toolkit
+  - `forge`: Build, test, and deploy contracts
+  - `anvil`: Local development EVM
+  - `cast`: Interact with deployed contracts
+- **OpenZeppelin**: Industry-standard libraries
+- **IPFS (optional)**: Off-chain content addressing
 
-### Test
+---
 
-```shell
-$ forge test
-```
+## 🧪 Getting Started
 
-### Format
+Make sure you have [Foundry installed](https://book.getfoundry.sh/getting-started/installation.html):
 
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
-# foundry-portfolio
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
