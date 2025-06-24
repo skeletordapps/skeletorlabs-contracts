@@ -14,7 +14,7 @@ import {ITestimonial} from "./interfaces/ITestimonial.sol";
 contract TestimonialRegistry is Ownable {
     uint256 public nextId;
 
-    mapping(bytes32 hash => uint256 id) private hashToId;
+    mapping(bytes32 hash => bool used) private storedHashes;
     mapping(uint256 id => ITestimonial.Testimonial) private testimonials;
     mapping(uint256 id => mapping(address account => bool liked)) public likedBy;
 
@@ -33,11 +33,11 @@ contract TestimonialRegistry is Ownable {
      */
     function store(bytes32 hash) external {
         require(hash != bytes32(0), ITestimonial.ITestimonial__Error("Invalid hash"));
-        require(testimonials[hashToId[hash]].timestamp == 0, ITestimonial.ITestimonial__Error("Already stored"));
+        require(!storedHashes[hash], ITestimonial.ITestimonial__Error("Already stored"));
 
         address sender = msg.sender;
         uint256 _nextId = nextId;
-        hashToId[hash] = _nextId;
+        storedHashes[hash] = true;
         testimonials[_nextId] = ITestimonial.Testimonial({
             id: _nextId,
             author: sender,

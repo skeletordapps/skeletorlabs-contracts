@@ -44,7 +44,7 @@ contract TestimonialRegistryTest is Test {
     }
 
     function testCanStore() external {
-        bytes32 expectedHash = keccak256("fake-hash");
+        bytes32 expectedHash = keccak256("0xfakehash");
 
         vm.startPrank(bob);
         vm.expectEmit(true, true, true, true);
@@ -61,7 +61,7 @@ contract TestimonialRegistryTest is Test {
     }
 
     modifier stored(address account) {
-        bytes32 hash = keccak256("fake-hash");
+        bytes32 hash = keccak256("0xfakehash");
         vm.startPrank(account);
         t.store(hash);
         vm.stopPrank();
@@ -69,7 +69,7 @@ contract TestimonialRegistryTest is Test {
     }
 
     function testRevertStoreWhenAlreadyStored() external stored(bob) {
-        bytes32 hash = keccak256("fake-hash");
+        bytes32 hash = keccak256("0xfakehash");
         vm.startPrank(bob);
         vm.expectRevert(abi.encodeWithSelector(ITestimonial.ITestimonial__Error.selector, "Already stored"));
         t.store(hash);
