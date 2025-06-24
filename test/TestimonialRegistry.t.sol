@@ -113,7 +113,7 @@ contract TestimonialRegistryTest is Test {
     function testRevertRemoveWhenNotAllowed() external stored(bob) {
         vm.startPrank(mary);
         vm.expectRevert(abi.encodeWithSelector(ITestimonial.ITestimonial__Error.selector, "Not allowed"));
-        t.remove(0);
+        t.deactivate(0);
         vm.stopPrank();
     }
 
@@ -122,8 +122,8 @@ contract TestimonialRegistryTest is Test {
 
         vm.startPrank(owner);
         vm.expectEmit(true, true, true, true);
-        emit ITestimonial.Removed(id, block.timestamp);
-        t.remove(id);
+        emit ITestimonial.Deactivated(id, block.timestamp);
+        t.deactivate(id);
         vm.stopPrank();
     }
 
@@ -132,8 +132,8 @@ contract TestimonialRegistryTest is Test {
 
         vm.startPrank(bob);
         vm.expectEmit(true, true, true, true);
-        emit ITestimonial.Removed(id, block.timestamp);
-        t.remove(id);
+        emit ITestimonial.Deactivated(id, block.timestamp);
+        t.deactivate(id);
         vm.stopPrank();
     }
 }

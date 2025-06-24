@@ -15,9 +15,15 @@ contract TestimonialRegistry is Ownable {
     uint256 public nextId;
 
     mapping(bytes32 hash => uint256 id) private hashToId;
-    mapping(uint256 id => bytes32 hash) private idToHash;
     mapping(uint256 id => ITestimonial.Testimonial) private testimonials;
     mapping(uint256 id => mapping(address account => bool liked)) public likedBy;
+
+    modifier onlyActive(uint256 id) {
+        require(
+            testimonials[id].active && testimonials[id].timestamp > 0, ITestimonial.ITestimonial__Error("Invalid id")
+        );
+        _;
+    }
 
     constructor() Ownable(msg.sender) {}
 
@@ -31,10 +37,15 @@ contract TestimonialRegistry is Ownable {
 
         address sender = msg.sender;
         uint256 _nextId = nextId;
-        idToHash[_nextId] = hash;
         hashToId[hash] = _nextId;
-        testimonials[_nextId] =
-            ITestimonial.Testimonial({author: sender, hash: hash, timestamp: block.timestamp, likes: 0});
+        testimonials[_nextId] = ITestimonial.Testimonial({
+            id: _nextId,
+            author: sender,
+            hash: hash,
+            timestamp: block.timestamp,
+            likes: 0,
+            active: true
+        });
 
         nextId++;
         emit ITestimonial.Stored(sender, _nextId, block.timestamp);
@@ -45,10 +56,9 @@ contract TestimonialRegistry is Ownable {
      * @dev Authors and the contract owner cannot like their own testimonials
      * @param id The ID of the testimonial to like
      */
-    function like(uint256 id) external {
+    function like(uint256 id) external onlyActive(id) {
         require(!likedBy[id][msg.sender], ITestimonial.ITestimonial__Error("Already liked"));
         ITestimonial.Testimonial storage testimonial = testimonials[id];
-        require(testimonial.timestamp > 0, ITestimonial.ITestimonial__Error("Invalid id"));
         require(
             msg.sender != testimonial.author && msg.sender != owner(), ITestimonial.ITestimonial__Error("Not allowed")
         );
@@ -64,19 +74,14 @@ contract TestimonialRegistry is Ownable {
      * @dev Only the author or the contract owner can delete
      * @param id The ID of the testimonial to delete
      */
-    function remove(uint256 id) external {
-        ITestimonial.Testimonial memory testimonial = testimonials[id];
+    function deactivate(uint256 id) external onlyActive(id) {
+        ITestimonial.Testimonial storage testimonial = testimonials[id];
         address sender = msg.sender;
 
         require(sender == testimonial.author || sender == owner(), ITestimonial.ITestimonial__Error("Not allowed"));
 
-        bytes32 hash = idToHash[id];
-
-        delete idToHash[id];
-        delete hashToId[hash];
-        delete testimonials[id];
-
-        emit ITestimonial.Removed(id, block.timestamp);
+        testimonial.active = false;
+        emit ITestimonial.Deactivated(id, block.timestamp);
     }
 
     /**
