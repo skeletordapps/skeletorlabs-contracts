@@ -1,4 +1,4 @@
-# 📦 Smart Contracts Portfolio
+# 📦 SkeletorLabs Smart Contracts
 
 Welcome to the public Skeletor Dapps Portfolio smart contracts repo -- built with [Foundry](https://github.com/foundry-rs/foundry) — a blazing-fast, modular toolkit for Ethereum development. This repo contains auditable, tested, and gas-efficient contracts written in Solidity.
 
