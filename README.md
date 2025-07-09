@@ -8,12 +8,13 @@ Welcome to the public Skeletor Dapps Portfolio smart contracts repo -- built wit
 
 A simple and gas-efficient registry for storing testimonials off-chain (on IPFS) while keeping verifiable references on-chain. It includes:
 
-- IPFS CID storage and mapping
-- Author/Owner removal
-- Like functionality (one like per address/testimonial)
-- Public event logging for off-chain indexing
+- IPFS CID **storage and mapping**
+- **Deactivation** by Author/Owner
+- **Like** functionality (one like per address/testimonial)
+- Public **event logging** for off-chain indexing
 
 Planned features:
+
 - More contracts coming soon...
 
 ## 🛠 Stack
@@ -35,3 +36,4 @@ Make sure you have [Foundry installed](https://book.getfoundry.sh/getting-starte
 ```bash
 curl -L https://foundry.paradigm.xyz | bash
 foundryup
+```
