@@ -13,9 +13,10 @@ remappings = [
 
 [rpc_endpoints]
 base = "${BASE_RPC_URL}"
+hedera_testnet = "${HEDERA_TESTNET_RPC_URL}"
 
-[etherscan]
-base = { key = "${BASESCAN_API_KEY}", chain = 8453, url = "https://api.basescan.org/api" }
+# [etherscan]
+# base = { key = "${BASESCAN_API_KEY}", chain = 8453, url = "https://api.basescan.org/api" }
 
 [invariant]
 fail_on_revert = false

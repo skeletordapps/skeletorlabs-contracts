@@ -6,7 +6,8 @@ import {TestimonialRegistry} from "../src/TestimonialRegistry.sol";
 
 contract DeployTestimonials is Script {
     function run() external returns (TestimonialRegistry t) {
-        uint256 privateKey = vm.envUint("PRIVATE_KEY");
+        // uint256 privateKey = vm.envUint("PRIVATE_KEY");
+        uint256 privateKey = vm.envUint("HEDERA_PRIVATE_KEY");
 
         vm.startBroadcast(privateKey);
         t = new TestimonialRegistry();
